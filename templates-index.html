@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Events</title>
+    <meta http-equiv="refresh" content="15">
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .event { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<h2>Latest GitHub Activity</h2>
+
+{% for e in events %}
+<div class="event">
+    {% if e.action == "PUSH" %}
+        "{{ e.author }}" pushed to "{{ e.to_branch }}" on {{ e.timestamp.strftime("%d %B %Y - %I:%M %p UTC") }}
+    {% elif e.action == "PULL_REQUEST" %}
+        "{{ e.author }}" submitted a pull request from "{{ e.from_branch }}" to "{{ e.to_branch }}" on {{ e.timestamp.strftime("%d %B %Y - %I:%M %p UTC") }}
+    {% elif e.action == "MERGE" %}
+        "{{ e.author }}" merged branch "{{ e.from_branch }}" to "{{ e.to_branch }}" on {{ e.timestamp.strftime("%d %B %Y - %I:%M %p UTC") }}
+    {% endif %}
+</div>
+{% endfor %}
+
+</body>
+</html>
